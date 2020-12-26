@@ -21,6 +21,8 @@
     "gatsby-plugin-styled-components": "^3.7.0",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
-    "styled-components": "^5.2.1"
+    "styled-components": "^5.2.1",
+    "xterm": "^4.9.0",
+    "xterm-addon-fit": "^0.4.0"
   }
 }
