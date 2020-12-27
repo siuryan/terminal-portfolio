@@ -23,17 +23,18 @@ class ReactTerminal extends React.Component {
     commandOutput = {
         "help": Content.HELP_STRING,
         "projects": {
-            "help": "help test",
+            "help": "Work in progress",
             "smartwatch": "this is a test smartwatch",
         },
-        "about": "asda",
-        "contact": "asdas",
-        "resume": "asdsad"
+        "about": Content.ABOUT_STRING,
+        "contact": Content.CONTACT_STRING,
+        "resume": "To be added",
+        "links": "To be added"
     };
 
     writelnWithDelay(term, message) {
         var strObj = {string: message};
-        var intervalId = window.setInterval(() => { this.writeChar(strObj); }, /*45*/1);
+        var intervalId = window.setInterval(() => { this.writeChar(strObj); }, 25);
         this.writeChar = (strObj) => {
             term.write(strObj.string[0]);
             strObj.string = strObj.string.substring(1);
@@ -106,7 +107,7 @@ class ReactTerminal extends React.Component {
         // make terminal text color green
         term.write("\x1b[1;32m");
 
-        this.writelnWithDelay(term, "Hello there... type `help` to get started.\r\n\r\n");
+        this.writelnWithDelay(term, Content.WELCOME_STRING);
 
         term.onData(data => {
             if (data.charCodeAt(0) === 13) {
