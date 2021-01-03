@@ -15,7 +15,6 @@ const StyledTerminalDiv = styled.div`
   top: 0;
   z-index: 10;
   background: black;
-  font-size: large;
 `;
 
 class ReactTerminal extends React.Component {
@@ -23,13 +22,24 @@ class ReactTerminal extends React.Component {
     commandOutput = {
         "help": Content.HELP_STRING,
         "projects": {
-            "help": "Work in progress",
-            "smartwatch": "this is a test smartwatch",
+            "help": Content.PROJECTS_HELP_STRING,
+            "smartwatch": Content.SMARTWATCH_STRING,
+            "Chron-x": Content.SMARTWATCH_STRING,
+            "chron-x": Content.SMARTWATCH_STRING,
+            "chronx": Content.SMARTWATCH_STRING,
+            "Augury": Content.AUGURY_STRING,
+            "augury": Content.AUGURY_STRING,
+            "Graphics": Content.GRAPHICS_ENGINE_STRING,
+            "graphics": Content.GRAPHICS_ENGINE_STRING,
+            "Simplicity": Content.SIMPLICITY_STRING,
+            "simplicity": Content.SIMPLICITY_STRING,
+            "Robotics": Content.ROBOTICS_STRING,
+            "robotics": Content.ROBOTICS_STRING,
         },
         "about": Content.ABOUT_STRING,
         "contact": Content.CONTACT_STRING,
-        "resume": "To be added",
-        "links": "To be added"
+        "resume": Content.RESUME_STRING,
+        "links": Content.LINKS_STRING,
     };
 
     writelnWithDelay(term, message) {
@@ -91,7 +101,7 @@ class ReactTerminal extends React.Component {
             fontSize: 20,
         });
         term.prompt = () => {
-            term.write("$ ");
+            term.write("[ryan.siu @ portfolio] $ ");
         }
         const fitAddon = new FitAddon();
         term.loadAddon(fitAddon);
@@ -105,6 +115,7 @@ class ReactTerminal extends React.Component {
         term.focus();
 
         // make terminal text color green
+        // TODO: change up style a little?
         term.write("\x1b[1;32m");
 
         this.writelnWithDelay(term, Content.WELCOME_STRING);
@@ -112,16 +123,16 @@ class ReactTerminal extends React.Component {
         term.onData(data => {
             if (data.charCodeAt(0) === 13) {
                 // enter
-                if (this.state.command) {
-                    var messageOutput = this.getOutputFromCommand(this.state.command.trimRight());
-                    console.log(messageOutput);
+                const command = this.state.command.trimRight();
+                if (command) {
+                    var messageOutput = this.getOutputFromCommand(command);
                     term.write("\r\n");
                     term.write(messageOutput);
                 }
                 this.setState({command: ""});
                 term.write("\r\n\r\n");
                 term.prompt();
-            } else if (data.charCodeAt(0) === 127) {
+            } else if (data.charCodeAt(0) === 8 || data.charCodeAt(0) === 127) {
                 // backspace
                 if (this.state.command) {
                     this.setState({
@@ -129,7 +140,8 @@ class ReactTerminal extends React.Component {
                     });
                     term.write("\b \b");
                 }
-            } else {
+            } // TODO: special cases for arrow keys, CTRL-C?
+            else {
                 this.setState({command: this.state.command + data});
                 term.write(data);
             }
