@@ -42,9 +42,9 @@ class ReactTerminal extends React.Component {
         "links": Content.LINKS_STRING,
     };
 
-    writelnWithDelay(term, message, window) {
+    writelnWithDelay(term, message) {
         var strObj = {string: message};
-        var intervalId = window.setInterval(() => { this.writeChar(strObj); }, 25);
+        var intervalId = setInterval(() => { this.writeChar(strObj); }, 25);
         this.writeChar = (strObj) => {
             term.write(strObj.string[0]);
             strObj.string = strObj.string.substring(1);
@@ -118,7 +118,7 @@ class ReactTerminal extends React.Component {
         // TODO: change up style a little?
         term.write("\x1b[1;32m");
 
-        this.writelnWithDelay(term, Content.WELCOME_STRING, window);
+        this.writelnWithDelay(term, Content.WELCOME_STRING);
 
         term.onData(data => {
             if (data.charCodeAt(0) === 13) {
