@@ -3,4 +3,5 @@ module.exports = {
     title: "portfolio",
   },
   plugins: ["gatsby-plugin-styled-components"],
+  pathPrefix: "/terminal-portfolio",
 };
