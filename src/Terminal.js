@@ -1,9 +1,6 @@
 import * as React from "react";
 import styled from "styled-components";
 
-import { Terminal } from 'xterm';
-import { FitAddon } from 'xterm-addon-fit';
-
 import "../node_modules/xterm/css/xterm.css";
 import * as Content from "./content";
 
@@ -94,6 +91,10 @@ class ReactTerminal extends React.Component {
     }
 
     componentDidMount() {
+        // import modules locally to prevent window error on gatsby build
+        const Terminal = require('xterm');
+        const FitAddon = require('xterm-addon-fit');
+
         const term = new Terminal({
             theme: {
                 // selection: "#00FF00"
